@@ -25,18 +25,19 @@ for page in range(1, number_of_pages + 1):
 
     else:
         for link in links_list:
-            print('i am here')
             new_url = 'https://www.nature.com' + link
             new_request = requests.get(new_url)
             new_parse = BeautifulSoup(new_request.content, 'html.parser')
 
             titles = new_parse.find('h1',
-                                    {'class': "c-article-magazine-title"}).text. \
-                strip()
+                                    {'class': "c-article-magazine-title"}).text.strip()
+            
             article_titles = [a for a in titles if a not in punctuations]
             file_names = ("".join(article_titles)).replace(' ', '_') + '.txt'
+            
             content = new_parse.find('p', {"class": "article__teaser"}).text.strip()
             os.mkdir(f'Page_{page}') if not os.path.isdir(f'Page_{page}') else None
+            
             file = open(f'Page_{page}\{file_names}', 'w', encoding='utf-8')
             file.write(content)
             file.close()
