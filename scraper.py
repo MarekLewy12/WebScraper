@@ -29,8 +29,7 @@ for page in range(1, number_of_pages + 1):
             new_request = requests.get(new_url)
             new_parse = BeautifulSoup(new_request.content, 'html.parser')
 
-            titles = new_parse.find('h1',
-                                    {'class': "c-article-magazine-title"}).text.strip()
+            titles = new_parse.find('h1', {'class': "c-article-magazine-title"}).text.strip()
             
             article_titles = [a for a in titles if a not in punctuations]
             file_names = ("".join(article_titles)).replace(' ', '_') + '.txt'
